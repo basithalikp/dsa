@@ -50,7 +50,7 @@ void delete_front(){
         printf("Empty!");
     }
     ptr=head;
-    printf("Deleted item : %d",ptr->data);
+    printf("Deleted item : %d\n",ptr->data);
     head=head->link;
     free(ptr);
 }
@@ -93,16 +93,18 @@ void delete_end(){
         prev=ptr;
         ptr=ptr->link;
     }
-    printf("Deleted item : %d",ptr->data);
+    printf("Deleted item : %d\n",ptr->data);
     prev->link=NULL;
     free(ptr);
 }
 
 void display(){
     if (head==NULL)
-    {
         printf("Empty!");
-    }
+
+    for (int i = 0; i < 10; i++)
+        printf("_");
+    printf("\n");
     ptr=head;
     while (ptr!=NULL)
     {
