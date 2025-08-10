@@ -1,43 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct node{
     int coefficient;
     int exponent;
     struct node* link;
-}*head=NULL;
+}*phead=NULL,*qhead=NULL;
 
-void insert(int coeff, int exp){
-    struct node* new= (struct node*)malloc(sizeof(struct node));
-    if (head==NULL||head->exponent<exp)
-    {
-        new->link=head->link;
-        head=new;
+struct node* insert(int coeff, int exp, struct node* head){
+    struct node* new = (struct node*)malloc(sizeof(struct node));
+    new->coefficient = coeff;
+    new->exponent = exp;
+    new->link = NULL;
+
+    if (head == NULL || exp > head->exponent){
+        new->link = head;
+        head = new;
     }
     else{
-        struct node* temp=head;
-        while (temp!=NULL&&temp->exponent<exp)
-            temp=temp->link;
-        new->link=temp->link;
-        temp->link=new;
+        struct node* temp = head;
+        while (temp->link != NULL && temp->link->exponent > exp)
+            temp = temp->link;
+        new->link = temp->link;
+        temp->link = new;
     }
+    return head;
 }
 
-void polynomial(){
+struct node* polynomial(struct node* head){
     int size,exp,coeff;
     printf("Enter the size of the polynomial : ");
     scanf("%d",&size);
     for (int i = 0; i < size; i++)
     {
-        printf("Enter the coefficient of %dth term of the polynomial : ");
+        printf("Enter the coefficient of %dth term of the polynomial : ",i+1);
         scanf("%d",&coeff);
-        printf("Enter the exponent of %dth term of the polynomial : ");
+        printf("Enter the exponent of %dth term of the polynomial : ",i+1);
         scanf("%d",&exp);
-        insert(coeff,exp);
+        head=insert(coeff,exp,head);
     }
+    return head;
+}
+
+void display(struct node* head){
+    if (head==NULL)
+        printf("Empty polynomial!");
+    for (struct node* i = head; i!=NULL; i=i->link){
+        printf("%dx^%d",i->coefficient,i->exponent);
+        if(i->link!=NULL)
+            printf("+");
+    }
+    printf("\n");
 }
 
 int main(){
     printf("This is a menu driven program for polynomials\n");
     printf("Enter the first polynomial : \n");
-    polynomial();
+    phead=polynomial(phead);
+    display(phead);
+    return 0;
 }
