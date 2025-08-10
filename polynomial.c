@@ -5,7 +5,7 @@ struct node {
     int coefficient;
     int exponent;
     struct node* link;
-} * phead = NULL, *qhead = NULL, *sumhead=NULL;
+} * phead = NULL, *qhead = NULL, *rhead=NULL;
 
 struct node* createNode(int coeff, int exp) {
     struct node* new = (struct node*)malloc(sizeof(struct node));
@@ -68,7 +68,7 @@ struct node* polynomial(struct node* head) {
 
 void add(){
     struct node* i=phead, *j=qhead, *k=NULL, *new;
-    sumhead = NULL;
+    rhead = NULL;
 
     while (i != NULL && j != NULL)
     {
@@ -95,9 +95,9 @@ void add(){
         }
 
         if (new != NULL) {
-            if (sumhead == NULL)
+            if (rhead == NULL)
             {
-                sumhead = k = new;
+                rhead = k = new;
             }
             else
             {
@@ -110,9 +110,9 @@ void add(){
     while (i != NULL)
     {
         new = createNode(i->coefficient, i->exponent);
-        if (sumhead == NULL)
+        if (rhead == NULL)
         {
-            sumhead = k = new;
+            rhead = k = new;
         }
         else
         {
@@ -125,9 +125,9 @@ void add(){
     while (j != NULL)
     {
         new = createNode(j->coefficient, j->exponent);
-        if (sumhead == NULL)
+        if (rhead == NULL)
         {
-            sumhead = k = new;
+            rhead = k = new;
         }
         else
         {
@@ -138,6 +138,21 @@ void add(){
     }
 }
 
+void multiply(){
+    struct node *i = phead, *j;
+    rhead = NULL;
+
+    while (i != NULL)
+    {
+        j = qhead;
+        while (j != NULL)
+        {
+            rhead = addTerm(rhead, i->coefficient * j->coefficient, i->exponent + j->exponent);
+            j = j->link;
+        }
+        i = i->link;
+    }
+}
 
 void display(struct node* head) {
     if (head == NULL) {
@@ -185,12 +200,14 @@ int main() {
     {
     case 1:
         add();
-        printf("The sum of the polynomials is : ");
-        display(sumhead);
         break;
-    
+    case 2:
+        multiply();
+        break;
     default:
         printf("Invalid option!");
     }
+    printf("The resultant polynomial is : ");
+    display(rhead);
     return 0;
 }
