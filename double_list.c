@@ -40,7 +40,7 @@ void insert_begining(int data){
     }
     else
     {
-        printf("No enough memory");
+        printf("No enough memory!\n");
     }
 }
 
