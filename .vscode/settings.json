@@ -2,6 +2,18 @@
     "files.associations": {
         "cstdlib": "c",
         "cstdio": "c",
-        "*.inc": "c"
+        "*.inc": "c",
+        "unordered_map": "c",
+        "unordered_set": "c",
+        "forward_list": "c",
+        "list": "c",
+        "fstream": "c",
+        "iosfwd": "c",
+        "istream": "c",
+        "limits": "c",
+        "shared_mutex": "c",
+        "sstream": "c",
+        "stop_token": "c",
+        "streambuf": "c"
     }
 }
